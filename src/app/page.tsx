@@ -1,3 +1,5 @@
+"use client"
+
 import { mainColor } from "@/assets/colors/Colors";
 import Image from "next/image";
 
@@ -41,7 +43,9 @@ function Logo() {
 }
 
 function Button() {
-  const { userId } = useAuth;
+  const { userId } = useAuth()
+
+  console.log(userId, 'this is user id')
 
   return userId ? (
     <Link href="/my-notes">
@@ -53,15 +57,19 @@ function Button() {
     </Link>
   ) : (
     <div className="flex gap-2 max-sm:flex-col max-sm:w-[60%] max-sm:mt-8">
+
       <button
-        className={`max-sm:w-full bg-[${mainColor}] p-[8px] px-6 text-sm text-white rounded-md`}
-      >
-        Sign In
+        className={`max-sm:w-full bg-[${mainColor}] p-[8px] px-6 text-sm text-white rounded-md`}>
+        <Link href="/sign-in">
+          Sign In
+        </Link>
       </button>
+
       <button
-        className={`text-sm border border-[${mainColor}] text-[${mainColor}] hover:bg-[${mainColor}] hover:text-white p-[8px] px-6 rounded-md`}
-      >
-        Sign Up
+        className={`text-sm border border-[${mainColor}] text-[${mainColor}] hover:bg-[${mainColor}] hover:text-white p-[8px] px-6 rounded-md`}>
+          <Link href="/sign-up">
+          Sign Up
+        </Link>
       </button>
     </div>
   );
@@ -84,7 +92,7 @@ function CTASection() {
         className="block px-9 py-3 text-sm bg-[#6815dc] rounded-lg font-medium text-white transition focus:outline-none"
         type="button"
       >
-        Let's get started!
+        Let&lsquo;s get started!
       </button>
     </div>
   );
