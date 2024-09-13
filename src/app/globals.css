@@ -32,6 +32,12 @@ body {
   }
 }
 
+@layer base{
+  body {
+      @apply dark:bg-gray-800 bg-white
+  }
+}
+
 .poppins{
   font-family: var(--font-poppins);
 }

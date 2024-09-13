@@ -45,7 +45,6 @@ function Logo() {
 function Button() {
   const { userId } = useAuth()
 
-  console.log(userId, 'this is user id')
 
   return userId ? (
     <Link href="/my-notes">

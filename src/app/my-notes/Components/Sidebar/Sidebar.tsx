@@ -2,15 +2,14 @@
 
 import React from 'react'
 import DataObjectIcon from '@mui/icons-material/DataObject';
-import BorderAllIcon from "@mui/icons-material/BorderAll"
-import { DeleteOutlineOutlined, FavoriteBorder } from '@mui/icons-material';
-import { mainColor } from '@/assets/colors/Colors';
 import JavascriptOutlinedIcon from '@mui/icons-material/JavascriptOutlined';
 import { useGlobalContext } from '@/ContextApi';
+import { useTheme } from 'next-themes';
 
 export default function Sidebar() {
+    
     return (
-        <div className=' w-[20%] p-5 flex flex-col gap-2 h-screen pt-7 border-r pl-[25px]' >
+        <div className='  w-[20%] p-5 flex flex-col gap-2 h-screen pt-7 border-r pl-[25px]' >
             <Logo />
             <QuickLinks />
             <Languages />
@@ -34,7 +33,7 @@ function Logo() {
 function QuickLinks() {
 
     const { sideBarMenuObject: { sideBarMenu,setSideBarMenu } } = useGlobalContext();
-    console.log(sideBarMenu, 'this is menu')
+
 
     const clickedMenu=(index:number)=>{
         const updatedSidebarMenu = sideBarMenu.map((menu,i)=>{

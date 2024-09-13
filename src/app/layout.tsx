@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
+import {bodyBgImage} from "../assets/index"
 import "./globals.css";
 import {
   ClerkProvider,
@@ -34,7 +35,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <GlobalContextProvider>
-          <body className={poppins.className}>
+          <body  className={poppins.className}>
             {children}
           </body>
         </GlobalContextProvider>

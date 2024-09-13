@@ -64,16 +64,12 @@ export async function POST(req: Request) {
     try{
         await connect();
         await User.create(newUser)
-        console.log("user created")    
       }catch(err){
         console.error(err)
       }
   }
 
   
-
-  console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
-  console.log('Webhook body:', body)
 
   return new Response('', { status: 200 })
 }
