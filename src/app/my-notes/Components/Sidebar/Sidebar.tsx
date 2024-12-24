@@ -4,13 +4,13 @@ import React from 'react'
 import DataObjectIcon from '@mui/icons-material/DataObject';
 import JavascriptOutlinedIcon from '@mui/icons-material/JavascriptOutlined';
 import { useGlobalContext } from '@/ContextApi';
-import { useTheme } from 'next-themes';
 
 export default function Sidebar() {
-    
+
+    const {darkModeObject:{darkMode },openSideBarObject:{isOpen,setIsOpen}} = useGlobalContext()    
     return (
-        <div className='  w-[20%] p-5 flex flex-col gap-2 h-screen pt-7 border-r pl-[25px]' >
-            <Logo />
+        <div className= {` ${!isOpen ? 'max-md:fixed z-50 shadow-md':' max-md:hidden'}  pr-10 ${darkMode[1].isSelected ?'bg-white' :' bg-slate-800' } p-5 flex flex-col gap-2 h-screen pt-7 pl-[25px]`}>
+            <Logo />        
             <QuickLinks />
             <Languages />
         </div>
@@ -25,7 +25,7 @@ function Logo() {
             </div>
             <div className='flex gap-1 text-[19px]'>
                 <span className='font-bold text-purple-600'>Code</span>
-                <span className='text-slate-600'>Treasure</span>
+                <span className='text-slate-400'>Treasure</span>
             </div>
         </div>
     )
