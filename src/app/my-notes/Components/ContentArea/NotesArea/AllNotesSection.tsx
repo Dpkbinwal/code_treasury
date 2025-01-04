@@ -1,44 +1,59 @@
 import { SingleNoteType } from "@/app/Types";
 import { useGlobalContext } from "@/ContextApi";
 import {
+  DeleteOutlineRounded,
   DeleteRounded,
   FavoriteBorderOutlined,
   Javascript,
+  Message,
 } from "@mui/icons-material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import {
   materialLight,
   oneDark,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
+import Modal from "../../ReusableComp/Modal";
+import { Button } from "@mui/material";
 
 const AllNotesSection = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   const {
     allNotesObject: { allNotes },
+    openContentObject: { openContentNote },
   } = useGlobalContext();
-  console.log(allNotes);
+
+  useEffect(()=>{
+    setTimeout(()=>{
+      setLoading(false)
+    },1000)
+  },[])
 
   return (
     <div className="mt-5 flex h-[68vh]">
       <div
-        className="flex flex-wrap gap-4 h-full overflow-y-scroll w-full p-4"
+        className={`flex  ${
+          openContentNote ? "!flex-col" : "flex-wrap"
+        } gap-4 h-full overflow-y-scroll w-full p-4`}
         style={{
           overflowY: "scroll",
           scrollbarWidth: "none" /* For Firefox */,
           msOverflowStyle: "none" /* For IE 10+ */,
         }}
       >
-        {allNotes && allNotes.length == 0 ? (
+        {loading ? (
           <>
             <SingleNoteLoader />
             <SingleNoteLoader />
             <SingleNoteLoader />
             <SingleNoteLoader />
           </>
+        ) : allNotes && allNotes.length === 0 ? (
+          <div className="text-black mx-auto font-bold text-2xl">No Any Notes..........</div>
         ) : (
           allNotes.map((note, index) => (
-            <div key={index} className="w-[350px]">
+            <div key={index}>
               <SingleNote note={note} />
             </div>
           ))
@@ -63,29 +78,42 @@ function SingleNote({ note }: { note: SingleNoteType }) {
         !darkMode[1].isSelected
           ? "bg-slate-800 text-white"
           : "bg-white text-slate-400"
-      } max-md:w-full ${
-        openContentNote ? "w-full" : "w-[350px]"
-      }  rounded-md py-3 `}
+      } max-md:w-full 
+       ${openContentNote ? "!w-full" : "w-[350px]"}  rounded-md py-3 `}
     >
-      <NoteHeader title={note.title} favorite={note.isFavorite} />
+      <NoteHeader
+        title={note.title}
+        favorite={note.isFavorite}
+        allData={note}
+      />
       <NoteDate date={note.creationDate} />
       <NoteTags tags={note.tags} />
       <NoteDescription desc={note.description} />
       <CodeBlock language={note.language} code={note.code} />
-      <NoteFooter />
+      <NoteFooter id={note.id} />
     </div>
   );
 }
 
-function NoteHeader({ title, favorite }: { title: string; favorite: boolean }) {
+function NoteHeader({
+  title,
+  favorite,
+  allData,
+}: {
+  title: string;
+  favorite: boolean;
+  allData: SingleNoteType;
+}) {
   const {
     openContentObject: { openContentNote, setOpenContentNote },
+    selectedNoteContent: { setSelectedNote },
   } = useGlobalContext();
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
     setOpenContentNote(true);
     setIsClicked(true);
+    setSelectedNote(allData);
 
     // Optionally reset the effect after a delay
     setTimeout(() => setIsClicked(false), 1000);
@@ -96,7 +124,7 @@ function NoteHeader({ title, favorite }: { title: string; favorite: boolean }) {
       <span
         className={`font-bold w-[87%] cursor-pointer ${
           isClicked ? "text-purple-600" : ""
-        }`}
+        } hover:text-purple-600`}
         onClick={handleClick}
       >
         {title}
@@ -134,9 +162,6 @@ function NoteDescription({ desc }: { desc: string }) {
 function NoteTags({ tags }: { tags: string[] }) {
   return (
     <div className="text-slate-500 text-[11px] mx-4 flex-wrap flex gap-1 mt-4">
-      <span className="bg-purple-100 text-purple-600 p-1 rounded-md px-2">
-        JavaScript
-      </span>
       {tags.map((tag, index) => (
         <span
           key={index}
@@ -167,14 +192,62 @@ function CodeBlock({ language, code }: { language: string; code: string }) {
   );
 }
 
-function NoteFooter() {
+function NoteFooter({ id }: { id: string }) {
+  const {
+    allNotesObject: { allNotes, setAllNotes },
+  } = useGlobalContext();
+
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+
+  const handleDeleteNote = () => {
+    // Add your delete note logic here
+    console.log(`Deleting note with id: ${id}`);
+    setOpenDeleteModal(false);
+
+    const updatedNotes = allNotes.filter((note) => note.id !== id);
+    setAllNotes(updatedNotes);
+  };
+
   return (
-    <div className="flex justify-between text-[13px] text-slate-500 mx-4 mt-3">
+    <div className="flex justify-between text-[13px] mx-4 mt-3 text-black">
       <div className="flex gap-2 items-center">
         <Javascript sx={{ fontSize: 17 }} />
         JavaScript
       </div>
-      <DeleteRounded sx={{ fontSize: 17 }} className="cursor-pointer" />
+      <DeleteOutlineRounded
+        sx={{ fontSize: 17 }}
+        className="cursor-pointer"
+        onClick={() => setOpenDeleteModal(true)}
+      />
+      <Modal
+        isOpen={openDeleteModal}
+        onClose={() => setOpenDeleteModal(false)}
+        maxWidth={350}
+      >
+        <div className="mt-6 space-y-3">
+          <hr />
+          <div className="text-black  mb-5 text-[16px] text-center font-semibold px-10">
+            Are You Sure You want to Delete Note?
+          </div>
+          <hr />
+          <div className="float-right space-x-3">
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => setOpenDeleteModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleDeleteNote}
+            >
+              Delete
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

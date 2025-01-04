@@ -36,6 +36,14 @@ interface GlobalContextType {
   allNotesObject:{
     allNotes:SingleNoteType[],
     setAllNotes: React.Dispatch<React.SetStateAction<SingleNoteType[]>>;
+  },
+  selectedNoteContent:{
+    selectedNote: SingleNoteType | null;
+    setSelectedNote: React.Dispatch<React.SetStateAction<SingleNoteType | null>>;
+  },
+  isNewNoteObject:{
+    isNewNote: boolean,
+    setIsNewNote:React.Dispatch<React.SetStateAction<boolean>>;
   }
 }
 
@@ -64,6 +72,14 @@ const ContextProvider = createContext<GlobalContextType>({
   allNotesObject:{
     allNotes:[],
     setAllNotes: ()=>{}
+  },
+  selectedNoteContent:{
+    selectedNote: null,
+    setSelectedNote : ()=>{}
+  },
+  isNewNoteObject:{
+    isNewNote: false,
+    setIsNewNote: ()=>{}
   }
 });
 
@@ -115,7 +131,8 @@ export default function GlobalContextProvider({
   const [openContentNote, setOpenContentNote] = useState(false);
   const [isMobile,setIsMobile] = useState(false);
   const [allNotes, setAllNotes] = useState<SingleNoteType[]>([]);
-  const [selectedNote,setSelectedNote] = useState<SingleNoteType>()
+  const [selectedNote,setSelectedNote] = useState<SingleNoteType|null>(null)
+  const [isNewNote,setIsNewNote] = useState<boolean>(false)
 
   const handleResize = ()=>{
     setIsMobile(window.innerWidth<=640);
@@ -206,7 +223,7 @@ export default function GlobalContextProvider({
     //simulate
     setTimeout(()=>{
       setAllNotes(dummyNotes)
-    },1200)
+    },1000)
   },[])
 
   return (
@@ -226,6 +243,14 @@ export default function GlobalContextProvider({
         allNotesObject:{
           allNotes,
           setAllNotes,
+        },
+        selectedNoteContent:{
+          selectedNote,
+          setSelectedNote,
+        },
+        isNewNoteObject:{
+          isNewNote,
+          setIsNewNote,
         }
       }}
     >

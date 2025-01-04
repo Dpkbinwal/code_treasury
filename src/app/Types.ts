@@ -21,3 +21,13 @@ export interface SingleNoteType {
     language:string;
     creationDate:string;
 }
+
+// Modal Component
+export interface ModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    children: React.ReactNode;
+    showCrossIcon?: boolean;
+    maxWidth?: number;
+  }
+  
