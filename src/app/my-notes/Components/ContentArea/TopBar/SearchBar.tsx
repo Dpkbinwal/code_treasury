@@ -39,7 +39,6 @@ export default SearchBar;
 function AddNewSnippet() {
   const {
     openContentObject: { openContentNote, setOpenContentNote },
-    allNotesObject: { allNotes, setAllNotes },
     selectedNoteContent: { selectedNote, setSelectedNote },
     isNewNoteObject:{isNewNote,setIsNewNote}
   } = useGlobalContext();

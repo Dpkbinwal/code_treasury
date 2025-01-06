@@ -15,7 +15,7 @@ export interface SingleNoteType {
     id:string;
     title:string;
     isFavorite:boolean;
-    tags:string[];
+    tags:SingleTagType[];
     description:string;
     code:string;
     language:string;
@@ -31,3 +31,7 @@ export interface ModalProps {
     maxWidth?: number;
   }
   
+export interface SingleTagType {
+  id:string;
+  name:string;
+} 

@@ -65,6 +65,7 @@ const config: Config = {
         'neutrals-800': 'var(--color-neutrals-800)',
         'neutrals-900': 'var(--color-neutrals-900)',
         'neutrals-1000': 'var(--color-neutrals-1000)',
+        'main-500':'var(--color-main-500)',
         'border': 'var(--color-border)',
       },
       spacing: {

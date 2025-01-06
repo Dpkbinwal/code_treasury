@@ -1,12 +1,152 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  /* --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255; */
+  --color-base-white: #ffffff;
+  --color-base-black: #0a0a0b;
+  --color-primary: #000080;
+  --color-primary-100: #f6f6ff;
+  --color-primary-200: #F1F0FA;
+  --color-primary-300: #c6c6f7;
+  --color-primary-400: #babaf7;
+  --color-primary-500: #adadf7;
+  --color-primary-600: #a1a1f7;
+  --color-primary-700: #8888f7;
+  --color-primary-800: #6f6ff7;
+  --color-primary-900: #5757f7;
+  --color-primary-1000: #3e3ef7;
+  --color-secondary: #f15e03;
+  --color-secondary-00: #FF7A28;
+  --color-secondary-100: #ffe2d1;
+  --color-secondary-200: #fad7c2;
+  --color-secondary-300: #f2be9d;
+  --color-secondary-400: #f2af85;
+  --color-secondary-500: #f2a779;
+  --color-secondary-600: #f2a779;
+  --color-secondary-700: #f28a49;
+  --color-secondary-800: #f2823d;
+  --color-secondary-900: #f27b30;
+  --color-secondary-1000: #f27b30;
+  --color-success: #4bb543;
+  --color-success-100: #c2e7bf;
+  --color-success-200: #85d080;
+  --color-success-300: #357f2f;
+  --color-warning: #ffaf4d;
+  --color-warning-100: #ffe4c4;
+  --color-warning-200: #ffca88;
+  --color-warning-300: #e67f00;
+  --color-error: #b3261e;
+  --color-error-100: #f1ada9;
+  --color-error-200: #e25b53;
+  --color-error-300: #7f1b15;
+  --color-neutrals-100: #e3e3e3;
+  --color-neutrals-200: #cccbcb;
+  --color-neutrals-300: #b5b3b3;
+  --color-neutrals-400: #9f9c9c;
+  --color-neutrals-500: #898384;
+  --color-neutrals-600: #726c6c;
+  --color-neutrals-700: #5a5555;
+  --color-neutrals-800: #433e3f;
+  --color-neutrals-900: #2b2829;
+  --color-neutrals-1000: #151314;
+  --color-border: #f2f2f2;
+  --color-main-500: #9333EA;
+
+  --size-base: 1rem;
+  --size-xxs: 0.25rem;
+  --size-xs: 0.375rem;
+  --size-s: 0.5rem;
+  --size-sm: 0.75rem;
+  --size-m: 1rem;
+  --size-ml: 1.5rem;
+  --size-l: 2rem;
+  --size-xl: 3rem;
+
+  --heading-1-font-size: 20px;
+  --heading-1-font-weight: 700;
+  --heading-1-line-height: 1.2;
+
+  --heading-2-font-size: 18px;
+  --heading-2-font-weight: 700;
+  --heading-2-line-height: 1.2;
+
+  --heading-3-font-size: 16px;
+  --heading-3-font-weight: 700;
+  --heading-3-line-height: 1.2;
+
+  --heading-4-font-size: 24px;
+  --heading-4-font-weight: 700;
+  --heading-4-line-height: 1.2;
+
+  --heading-5-font-size: 12px;
+  --heading-5-font-weight: 700;
+  --heading-5-line-height: 1.4;
+
+  /* Mobile body */
+  --body-1-font-size: 14px;
+  --body-1-font-weight: 500;
+  --body-1-line-height: 1.5;
+
+  --body-2-font-size: 12px;
+  --body-2-font-weight: 500;
+  --body-2-line-height: 1.5;
+
+  --body-3-font-size: 10px;
+  --body-3-font-weight: 500;
+  --body-3-line-height: 1.5;
+
+  --body-4-font-size: 8px;
+  --body-4-font-weight: condensed 500;
+  --body-4-line-height: 1.5;
+
+  /* Desktop headings */
+  --heading-1-desktop-font-size: 56px;
+  --heading-1-desktop-font-weight: 700;
+  --heading-1-desktop-line-height: 1.2;
+
+  --heading-2-desktop-font-size: 48px;
+  --heading-2-desktop-font-weight: 700;
+  --heading-2-desktop-line-height: 1.2;
+
+  --heading-3-desktop-font-size: 40px;
+  --heading-3-desktop-font-weight: 700;
+  --heading-3-desktop-line-height: 1.2;
+
+  --heading-4-desktop-font-size: 32px;
+  --heading-4-desktop-font-weight: 700;
+  --heading-4-desktop-line-height: 1.2;
+
+  /* Desktop body */
+  --body-1-desktop-font-size: 18px;
+  --body-1-desktop-font-weight: 500;
+  --body-1-desktop-line-height: 1.5;
+
+  --body-2-desktop-font-size: 16px;
+  --body-2-desktop-font-weight: 500;
+  --body-2-desktop-line-height: 1.5;
+
+  --body-3-desktop-font-size: 14px;
+  --body-3-desktop-font-weight: 500;
+  --body-3-desktop-line-height: 1.5;
+
+  /* Display */
+  --display-1-font-size: 144px;
+  --display-1-font-weight: 700;
+  --display-1-line-height: 1.2;
+
+  --display-2-font-size: 96px;
+  --display-2-font-weight: 700;
+  --display-2-line-height: 1.2;
+
+  --display-3-font-size: 64px;
+  --display-3-font-weight: 700;
+  --display-3-line-height: 1.2;
 }
+
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -60,4 +200,31 @@ body {
   border-radius: 8px;
   margin-right: 30px;
   font-size: 14px;
+}
+
+
+
+ /* Apply custom scrollbar styles */
+ .custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scrollbar thumb */
+  border-radius: 4px; /* Rounded corners */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color on hover */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #f0f0f0; /* Track background color */
+  border-radius: 4px; /* Rounded corners for track */
+}
+
+/* Firefox Scrollbar */
+.custom-scrollbar {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: #888 #f0f0f0; /* Thumb color and track background */
 }

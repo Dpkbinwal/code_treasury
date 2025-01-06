@@ -14,7 +14,7 @@ const ContextArea = () => {
   const {darkModeObject:{darkMode},} = useGlobalContext()
 
   return (
-    <div className={`w-full h-screen ${darkMode[1].isSelected ?'bg-slate-100': 'bg-slate-700'}   p-5`}>
+    <div className={`w-[80%] h-screen ${darkMode[1].isSelected ?'bg-slate-100': 'bg-slate-700'}   p-5`}>
         <TopBar/>
         <NotesArea/>
     </div>

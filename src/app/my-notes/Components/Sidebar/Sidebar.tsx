@@ -16,7 +16,7 @@ export default function Sidebar() {
         !isOpen ? "max-md:fixed z-50 shadow-md" : " max-md:hidden"
       }  pr-10 ${
         darkMode[1].isSelected ? "bg-white" : " bg-slate-800"
-      } p-5 flex flex-col gap-2 h-screen pt-7 pl-[25px]`}
+      } p-5 flex flex-col gap-2 h-screen pt-7 pl-[25px] w-[20%]`}
     >
       <Logo />
       <QuickLinks />

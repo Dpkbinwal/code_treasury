@@ -1,4 +1,4 @@
-import { SingleNoteType } from "@/app/Types";
+import { SingleNoteType, SingleTagType } from "@/app/Types";
 import { useGlobalContext } from "@/ContextApi";
 import {
   DeleteOutlineRounded,
@@ -159,7 +159,7 @@ function NoteDescription({ desc }: { desc: string }) {
     </div>
   );
 }
-function NoteTags({ tags }: { tags: string[] }) {
+function NoteTags({ tags }: { tags: SingleTagType[] }) {
   return (
     <div className="text-slate-500 text-[11px] mx-4 flex-wrap flex gap-1 mt-4">
       {tags.map((tag, index) => (
@@ -169,7 +169,7 @@ function NoteTags({ tags }: { tags: string[] }) {
             index === tags.length - 1 ? "" : "mr-1"
           }`}
         >
-          {tag}
+          {tag.name}
         </span>
       ))}
     </div>
@@ -201,7 +201,6 @@ function NoteFooter({ id }: { id: string }) {
 
   const handleDeleteNote = () => {
     // Add your delete note logic here
-    console.log(`Deleting note with id: ${id}`);
     setOpenDeleteModal(false);
 
     const updatedNotes = allNotes.filter((note) => note.id !== id);
