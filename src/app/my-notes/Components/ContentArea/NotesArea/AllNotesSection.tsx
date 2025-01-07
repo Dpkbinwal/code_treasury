@@ -90,7 +90,7 @@ function SingleNote({ note }: { note: SingleNoteType }) {
       <NoteTags tags={note.tags} />
       <NoteDescription desc={note.description} />
       <CodeBlock language={note.language} code={note.code} />
-      <NoteFooter id={note.id} />
+      <NoteFooter codeLang={note.language} id={note.id} />
     </div>
   );
 }
@@ -192,7 +192,7 @@ function CodeBlock({ language, code }: { language: string; code: string }) {
   );
 }
 
-function NoteFooter({ id }: { id: string }) {
+function NoteFooter({ id,codeLang }: { id: string,codeLang:string }) {
   const {
     allNotesObject: { allNotes, setAllNotes },
   } = useGlobalContext();
@@ -211,7 +211,7 @@ function NoteFooter({ id }: { id: string }) {
     <div className="flex justify-between text-[13px] mx-4 mt-3 text-black">
       <div className="flex gap-2 items-center">
         <Javascript sx={{ fontSize: 17 }} />
-        JavaScript
+        {codeLang}
       </div>
       <DeleteOutlineRounded
         sx={{ fontSize: 17 }}

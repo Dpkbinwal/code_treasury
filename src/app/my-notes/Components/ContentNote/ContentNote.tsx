@@ -84,9 +84,21 @@ const ContentNote = () => {
             setSingleNote={setSingleNote}
             darkMode={darkMode}
           />
-          <ContentTags singleNote={singleNote} setSingleNote={setSingleNote} />
-          <Description singleNote={singleNote} setSingleNote={setSingleNote} />
-          <CodeBlock singleNote={singleNote} setSingleNote={setSingleNote} />
+          <ContentTags
+            singleNote={singleNote}
+            setSingleNote={setSingleNote}
+            darkMode={darkMode}
+          />
+          <Description
+            singleNote={singleNote}
+            setSingleNote={setSingleNote}
+            darkMode={darkMode}
+          />
+          <CodeBlock
+            singleNote={singleNote}
+            setSingleNote={setSingleNote}
+            darkMode={darkMode}
+          />
         </div>
       )}
     </div>
@@ -159,9 +171,11 @@ const ContentNoteHeader = ({
 function ContentTags({
   singleNote,
   setSingleNote,
+  darkMode,
 }: {
   singleNote: SingleNoteType;
   setSingleNote: React.Dispatch<React.SetStateAction<SingleNoteType | null>>;
+  darkMode: { [key: number]: { isSelected: boolean } };
 }) {
   const [hover, setHover] = useState<boolean>(false);
   const [isOpened, setIsOpened] = useState<boolean>(false);
@@ -209,7 +223,13 @@ function ContentTags({
         }}
         className="relative"
       >
-        <div className="flex gap-2 items-center flex-wrap">
+        <div
+          className={`flex gap-2 items-center flex-wrap  ${
+            !darkMode[1].isSelected
+              ? "bg-slate-800 text-white"
+              : "bg-white  text-slate-400"
+          } `}
+        >
           {singleNote.tags.length === 0 ? (
             <div
               className={`bg-purple-100 text-purple-600 p-1 rounded-md px-2 `}
@@ -255,7 +275,7 @@ const TagsMenu = ({
   } = useGlobalContext();
 
   return (
-    <ul className="absolute z-50 h-[200px] overflow-y-scroll custom-scrollbar right-0 top-10 bg-slate-100 border rounded-lg p-3 rounded-md flex flex-col gap-3">
+    <ul className="absolute z-50 h-[200px] overflow-y-scroll custom-scrollbar right-0 top-10 bg-slate-100 border p-3 rounded-md flex flex-col gap-3">
       {allTags.map((tag, ind) => (
         <li
           key={tag.id}
@@ -281,9 +301,11 @@ const TagsMenu = ({
 const Description = ({
   singleNote,
   setSingleNote,
+  darkMode,
 }: {
   singleNote: SingleNoteType;
   setSingleNote: React.Dispatch<React.SetStateAction<SingleNoteType | null>>;
+  darkMode: { [key: number]: { isSelected: boolean } };
 }) => {
   const [hover, setHover] = useState<boolean>(false);
   const {
@@ -327,14 +349,17 @@ const Description = ({
 function CodeBlock({
   singleNote,
   setSingleNote,
+  darkMode,
 }: {
   singleNote: SingleNoteType;
   setSingleNote: React.Dispatch<React.SetStateAction<SingleNoteType | null>>;
+  darkMode: { [key: number]: { isSelected: boolean } };
 }) {
   // Render code block here
   const [code, setCode] = useState(singleNote.code);
   const [isHovered, setIsHovered] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState(singleNote.language);
   const menuRef = useRef<HTMLDivElement>(null);
   const {
     allNotesObject: { allNotes, setAllNotes },
@@ -410,7 +435,7 @@ function CodeBlock({
               sx={{ fontSize: 18 }}
               className="text-slate-400"
             />
-            <span className="mt-[2px]">JavaScript</span>
+            <span className="mt-[2px]">{selectedLanguage}</span>
           </div>
           {isOpened ? (
             <KeyboardArrowUpOutlined sx={{ fontSize: 18 }} />
@@ -420,7 +445,10 @@ function CodeBlock({
         </div>
         {isOpened && (
           <div ref={menuRef}>
-            <LanguageMenu isOpened={isOpened} />
+            <LanguageMenu
+              isOpened={isOpened}
+              setSelectedLanguage={setSelectedLanguage}
+            />
           </div>
         )}
         <AceEditor
@@ -453,7 +481,13 @@ function CodeBlock({
   );
 }
 
-function LanguageMenu({ isOpened }: { isOpened: boolean }) {
+function LanguageMenu({
+  isOpened,
+  setSelectedLanguage,
+}: {
+  isOpened: boolean;
+  setSelectedLanguage: React.Dispatch<React.SetStateAction<string>>;
+}) {
   const textRef = useRef<HTMLInputElement>(null);
 
   const [allLang, setAllLang] =
@@ -491,6 +525,7 @@ function LanguageMenu({ isOpened }: { isOpened: boolean }) {
             className={`p-1 mb-2 cursor-pointer hover:bg-slate-300 transition-all ${
               lang.id === "currentLanguageId" ? "bg-slate-300" : ""
             }`}
+            onClick={()=>setSelectedLanguage(lang.name)}
           >
             {lang.icon}
             <span>{lang.name}</span>
