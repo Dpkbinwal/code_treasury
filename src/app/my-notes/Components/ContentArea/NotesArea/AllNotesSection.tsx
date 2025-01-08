@@ -195,6 +195,7 @@ function CodeBlock({ language, code }: { language: string; code: string }) {
 function NoteFooter({ id,codeLang }: { id: string,codeLang:string }) {
   const {
     allNotesObject: { allNotes, setAllNotes },
+    darkModeObject:{darkMode}
   } = useGlobalContext();
 
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
@@ -208,8 +209,8 @@ function NoteFooter({ id,codeLang }: { id: string,codeLang:string }) {
   };
 
   return (
-    <div className="flex justify-between text-[13px] mx-4 mt-3 text-black">
-      <div className="flex gap-2 items-center">
+    <div className="flex justify-between text-[13px] mx-4 mt-3 ">
+      <div className={` ${darkMode[1].isSelected ? 'text-black':'text-slate-400'} flex gap-2 items-center`}>
         <Javascript sx={{ fontSize: 17 }} />
         {codeLang}
       </div>

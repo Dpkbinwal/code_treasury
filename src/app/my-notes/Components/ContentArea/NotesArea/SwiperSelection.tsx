@@ -31,21 +31,24 @@ export default function SwiperSelection() {
           className="mySwiper"
           modules={[FreeMode]}
         >
-          <SwiperSlide className="bg-purple-600 p-1 rounded-md text-white w-20">
-            All
-          </SwiperSlide>
 
           <div className="w-[80vw]">
-          {allTags.map((tag) => {
-            return (
-              <SwiperSlide key={tag.id} className="text-slate-400 w-20">
-                {tag.name}
-              </SwiperSlide>
-            );
-          })}
+            {allTags.map((tag) => {
+              return (
+                <SwiperSlide
+                  key={tag.id} // Use the unique ID of the tag as the key
+                  onClick={() => setCurrentTag(tag.name)} // Attach click handler directly to SwiperSlide
+                  className={`w-20 ${
+                    currentTag === tag.name
+                      ? "bg-purple-600 p-1 rounded-md text-white"
+                      : "text-slate-400"
+                  }`}
+                >
+                  {tag.name}
+                </SwiperSlide>
+              );
+            })}
           </div>
-
-          
         </Swiper>
       </div>
       <button className="bg-purple-600 p-1 rounded-md px-3 flex gap-1 items-center text-white">

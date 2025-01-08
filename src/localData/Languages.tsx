@@ -34,6 +34,7 @@ export const allLanguages = [
 ];
 
 export const AllTags = [
+    { id: uuidv4(), name: "All"},
     { id: uuidv4(), name: "JavaScript" },
     { id: uuidv4(), name: "Python" },
     { id: uuidv4(), name: "Java" },

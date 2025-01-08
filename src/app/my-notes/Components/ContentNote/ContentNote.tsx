@@ -32,6 +32,7 @@ const ContentNote = () => {
     allNotesObject: { allNotes, setAllNotes },
     darkModeObject: { darkMode },
   } = useGlobalContext();
+  console.log("react")
 
   const [singleNote, setSingleNote] = useState<SingleNoteType | null>(null);
 
@@ -52,7 +53,7 @@ const ContentNote = () => {
 
   return (
     <div
-      className={`border 
+      className={` 
 
         ${
           !darkMode[1].isSelected
@@ -275,7 +276,7 @@ const TagsMenu = ({
   } = useGlobalContext();
 
   return (
-    <ul className="absolute z-50 h-[200px] overflow-y-scroll custom-scrollbar right-0 top-10 bg-slate-100 border p-3 rounded-md flex flex-col gap-3">
+    <ul className="absolute z-50 h-[200px] overflow-y-scroll custom-scrollbar right-0 top-10 bg-slate-100  p-3 rounded-md flex flex-col gap-3">
       {allTags.map((tag, ind) => (
         <li
           key={tag.id}
@@ -338,8 +339,9 @@ const Description = ({
         placeholder="New Description..."
         value={singleNote.description}
         onChange={onUpdateDesc}
-        className={`bg-white text-slate-400 outline-none h-auto overflow-hidden w-full rounded-xl pt-2 pl-2 mr-5 
-          ${hover ? "border-2 border-main-500" : "border-2"}
+        className={`bg-white text-slate-400 h-auto overflow-hidden w-full rounded-xl pt-2 pl-2 mr-5 
+          ${hover ? "border-2 border-main-500" : ""}
+          ${darkMode[1].isSelected ? "text-black border-2" : "bg-[#282C34] text-white "}
           `}
       />
     </div>
@@ -356,7 +358,7 @@ function CodeBlock({
   darkMode: { [key: number]: { isSelected: boolean } };
 }) {
   // Render code block here
-  const [code, setCode] = useState(singleNote.code);
+  const [code, setCode] = useState<string | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(singleNote.language);
@@ -365,7 +367,17 @@ function CodeBlock({
     allNotesObject: { allNotes, setAllNotes },
   } = useGlobalContext();
 
+  useEffect(() => {
+    if (singleNote.code) {
+      setCode(singleNote.code);
+    }
+    if (singleNote.language) {
+      setSelectedLanguage(singleNote.language);
+    }
+  }, [singleNote]);
+
   const handleCopyCode = () => {
+    if (!code) return;
     navigator.clipboard
       .writeText(code)
       .then(() => {
@@ -465,7 +477,7 @@ function CodeBlock({
           showPrintMargin={false}
           showGutter={false}
           highlightActiveLine={false}
-          value={code}
+          value={code ?? ""}
           setOptions={{
             enableBasicAutocompletion: false,
             enableLiveAutocompletion: false,
@@ -525,7 +537,7 @@ function LanguageMenu({
             className={`p-1 mb-2 cursor-pointer hover:bg-slate-300 transition-all ${
               lang.id === "currentLanguageId" ? "bg-slate-300" : ""
             }`}
-            onClick={()=>setSelectedLanguage(lang.name)}
+            onClick={() => setSelectedLanguage(lang.name)}
           >
             {lang.icon}
             <span>{lang.name}</span>
@@ -536,4 +548,4 @@ function LanguageMenu({
   );
 }
 
-export default ContentNote;
+export default React.memo(ContentNote);
